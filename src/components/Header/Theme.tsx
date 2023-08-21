@@ -1,7 +1,11 @@
 import React from 'react'
+import useTheme from '../../hooks/use-theme'
 
 export const Theme = () => {
-  return (
-    <div>Theme</div>
-  )
+    const [, toggleTheme] = useTheme()
+
+
+    return (
+        <div onClick={toggleTheme}>Theme</div>
+    )
 }
