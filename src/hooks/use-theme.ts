@@ -20,5 +20,3 @@ export const useTheme = (): [ThemeState, () => void, Theme] => {
 
     return [theme, toggleTheme, Creater]
 }
-
-export default useTheme

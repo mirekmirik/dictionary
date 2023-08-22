@@ -1,26 +1,54 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { Status } from '../../../types/status'
+import { loadFonts } from './fonts-thunks'
+import { Font } from '../../../types'
 
 interface fontsState {
-    currentFont: string | null
+    status: Status,
+    fonts: Font[],
+    currentFont: Font,
+    error: string | null,
 }
 
 
 const initialState: fontsState = {
-    currentFont: null,
+    status: 'idle',
+    error: null,
+    fonts: [],
+    currentFont: {
+        family: ''
+    },
 }
 
-export const counterSlice = createSlice({
+export const fontsSlice = createSlice({
     name: '@@fonts',
     initialState,
     reducers: {
-        changeFont: (state, action: PayloadAction<string>) => {
-            state.currentFont = action.payload;
+        setFont: (state, action: PayloadAction<Font>) => {
+            console.log('ss')
+            state.currentFont = action.payload
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loadFonts.pending, (state) => {
+                state.status = 'loading'
+                state.error = null
+            })
+            .addCase(loadFonts.rejected, (state, action) => {
+                state.status = 'rejected'
+                state.error = action.payload!
+            })
+            .addCase(loadFonts.fulfilled, (state, action) => {
+                state.status = 'fulfilled'
+                state.fonts = action.payload;
+                state.currentFont = action.payload[0]
+            })
+    }
 })
 
-export const { changeFont } = counterSlice.actions
+export const { setFont } = fontsSlice.actions
 
 
-export default counterSlice.reducer
+export default fontsSlice.reducer
