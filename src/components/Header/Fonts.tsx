@@ -1,17 +1,20 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { FontWithLabel } from './Header';
+import { ErrorT } from '../../types';
+import { Typography } from '@mui/material';
 
 interface FontsProps {
   fonts: FontWithLabel[],
+  error: ErrorT | null
   optionCurrentFont: FontWithLabel | null,
   onSetCurrentFont: (value: string) => void
 }
 
-export const Fonts = ({ fonts, optionCurrentFont, onSetCurrentFont }: FontsProps) => {
+export const Fonts = ({ fonts, optionCurrentFont, onSetCurrentFont, error }: FontsProps) => {
 
   return (
-    optionCurrentFont && (
+    !error && optionCurrentFont ? (
       <>
         <Autocomplete
           blurOnSelect
@@ -33,7 +36,7 @@ export const Fonts = ({ fonts, optionCurrentFont, onSetCurrentFont }: FontsProps
           }
         </style>
       </>
-    )
+    ) : <Typography color={'error'}>{error}</Typography>
   )
 }
 

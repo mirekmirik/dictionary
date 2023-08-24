@@ -1,12 +1,16 @@
 import React, { useRef } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/store'
 import { loadWord } from '../store/dictionary/dictionary-thunks'
-import { selectWord } from '../store/dictionary/dictionary-selectors'
-import { Word } from '../types'
+import { selectError, selectStatus, selectWord } from '../store/dictionary/dictionary-selectors'
+import { ErrorT, Status, Word } from '../types'
 
-export const useDictionary = (): {inputRef: React.RefObject<HTMLInputElement>, handleWord: (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => void, word: Word | null} => {
+export const useDictionary = (): { inputRef: React.RefObject<HTMLInputElement>, handleWord: (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => void, word: Word | null, error: ErrorT | null, status: Status } => {
     const dispatch = useAppDispatch()
     const word = useAppSelector(selectWord)
+    const error = useAppSelector(selectError)
+    const status = useAppSelector(selectStatus)
+    
+
     const inputRef = useRef<HTMLInputElement>(null)
 
     const handleWord = (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
@@ -17,6 +21,6 @@ export const useDictionary = (): {inputRef: React.RefObject<HTMLInputElement>, h
     }
 
 
-    return {inputRef, handleWord, word}
+    return { inputRef, handleWord, word, error, status }
 }
 

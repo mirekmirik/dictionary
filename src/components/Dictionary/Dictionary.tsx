@@ -1,5 +1,5 @@
 import { useDictionary } from '../../hooks/use-dictionary'
-import { Box, Container, Grid, Divider } from '@mui/material'
+import { Box, Container, Grid, Divider, Typography, CircularProgress } from '@mui/material'
 import Word from './Word'
 import Play from './Play'
 import Transcription from './Transcription'
@@ -12,11 +12,12 @@ import Antonymys from './Antonymys'
 
 const Dictionary = () => {
 
-    const { word } = useDictionary()
+    const { word, error, status } = useDictionary()
+
 
 
     return (
-        word && (
+        status !== 'loading' && status !== 'rejected' && word ? (
             <Container>
                 <Grid container direction={'row'} justifyContent={'space-between'} alignItems={'flex-start'}>
                     <Grid>
@@ -29,6 +30,7 @@ const Dictionary = () => {
                 <Box sx={{ mb: 4 }}>
                     <Transcription value={word.phonetic} />
                 </Box>
+
                 {word.meanings.map((data, idx) => {
                     return (
                         <>
@@ -55,11 +57,15 @@ const Dictionary = () => {
 
                     )
                 })}
-                <Divider sx={{ mb: 3 }} />
+                < Divider sx={{ mb: 3 }} />
                 <Box>
                     <Source value={word.sourceUrls} />
                 </Box>
-            </Container>)
+            </Container>) :
+            <Box sx={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
+                {status === 'loading' ? <CircularProgress color="secondary" /> : <Typography color={'error'}>{error}</Typography>}
+            </Box>
+
     )
 }
 

@@ -15,7 +15,7 @@ export interface FontWithLabel extends Font {
 
 
 const Header = () => {
-    const [fonts, currentFont, setCurrentFont] = useFonts()
+    const [fonts, currentFont, setCurrentFont, error] = useFonts()
     const { theme, toggleTheme } = useTheme()
 
 
@@ -33,7 +33,7 @@ const Header = () => {
                 </Grid>
                 <Grid container direction={'row'} justifyContent='flex-end' alignItems={'center'} columnGap={1} width={'auto'}>
                     <Grid item>
-                        <Fonts fonts={optionFonts} optionCurrentFont={optionCurrFont} onSetCurrentFont={setCurrentFont} />
+                        <Fonts fonts={optionFonts} optionCurrentFont={optionCurrFont} onSetCurrentFont={setCurrentFont} error={error} />
                     </Grid>
                     <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                     <Grid item>

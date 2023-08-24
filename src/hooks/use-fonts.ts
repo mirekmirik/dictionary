@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/store'
-import { selectFont, selectFonts } from '../store/header/fonts/fonts-selectors'
+import { selectError, selectFont, selectFonts } from '../store/header/fonts/fonts-selectors'
 import { loadFonts } from '../store/header/fonts/fonts-thunks'
-import { Font } from '../types'
+import { ErrorT, Font } from '../types'
 import { setFont } from '../store/header/fonts/fonts-slice'
 
-export const useFonts = (): [Font[], Font | null, (value: string) => void] => {
+export const useFonts = (): [Font[], Font | null, (value: string) => void, ErrorT | null] => {
     const dispatch = useAppDispatch()
     const fonts = useAppSelector(selectFonts)
     const currentFont = useAppSelector(selectFont)
-
+    const error = useAppSelector(selectError)
 
     useEffect(() => {
         dispatch(loadFonts())
@@ -24,6 +24,6 @@ export const useFonts = (): [Font[], Font | null, (value: string) => void] => {
         }
     }
 
-    return [fonts, currentFont, setCurrFont]
+    return [fonts, currentFont, setCurrFont, error]
 }
 

@@ -6,7 +6,8 @@ export const loadFonts = createAsyncThunk<Font[], undefined, { rejectValue: stri
     try {
         const response = await fetch(API_FONTS)
         if (!response.ok) {
-            throw new Error(`An error occurred during get fonts...`)
+            const data = await response.json()
+            throw new Error(data.error.message)
         }
         const { items } = await response.json()
         const fonts: Font[] = items.slice(0, 30).map((font: Font) => {
