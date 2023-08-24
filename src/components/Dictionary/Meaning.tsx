@@ -12,10 +12,10 @@ const Meaning = ({ value }: MeaningProps) => {
         <>
             <Typography sx={{ opacity: 0.7 }}>Meaning</Typography>
             <List>
-                {value.map((data) => {
+                {value.map((data, idx) => {
                     return (
                         <>
-                            <ListItem sx={{ display: 'flex', columnGap: 2,  }} >
+                            <ListItem key={idx} sx={{ display: 'flex', columnGap: 2,  }} >
                                 <LensIcon color='secondary' sx={{ height: 10, width: 10 }} />
                                 <ListItemText sx={{ 'listStyleType': "disc" }} primary={data.definition}></ListItemText>
                             </ListItem>

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
 
 :root {
-    --default-font-family: 'ADLaM Displa', sans-serif; /* Default font */
+    --default-font-family: 'ADLaM Displa', sans-serif; 
 }
 
 body {

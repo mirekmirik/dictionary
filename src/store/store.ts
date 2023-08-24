@@ -1,6 +1,6 @@
+import type { TypedUseSelectorHook } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
-import type { TypedUseSelectorHook } from 'react-redux'
 import fontsReducer from './header/fonts/fonts-slice'
 import themeReducer from './header/theme/theme-slice'
 import dictionaryReducer from './dictionary/dictionary-slice'
