@@ -4,11 +4,11 @@ import { ThemeState, setTheme } from '../store/header/theme/theme-slice'
 import { createTheme } from '@mui/material/styles';
 import { Theme } from '@mui/material'
 
-export const useTheme = (): [ThemeState, () => void, Theme] => {
+export const useTheme = (): { theme: ThemeState, toggleTheme: () => void, Creator: Theme } => {
     const dispatch = useAppDispatch()
     const theme = useAppSelector(selectTheme)
 
-    const Creater = createTheme({
+    const Creator = createTheme({
         palette: {
             mode: theme,
         },
@@ -18,5 +18,5 @@ export const useTheme = (): [ThemeState, () => void, Theme] => {
         dispatch(setTheme(theme === 'light' ? 'dark' : 'light'))
     }
 
-    return [theme, toggleTheme, Creater]
+    return { theme, toggleTheme, Creator }
 }

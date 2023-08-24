@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export type ThemeState = 'light' | 'dark'
 
 
-const initialState = 'dark' as ThemeState
+const initialState = 'light' as ThemeState
 
 export const ThemeSlice = createSlice({
   name: '@@theme',

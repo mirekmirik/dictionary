@@ -8,10 +8,9 @@ interface ContainerProps {
 
 const Wrapper = ({ children }: ContainerProps) => {
     return (
-        <Container maxWidth="sm">
+        <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column' }}>
             {children}
-        </Container>
-
+        </Container >
     )
 }
 

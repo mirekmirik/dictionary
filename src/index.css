@@ -5,6 +5,11 @@
     --default-font-family: 'ADLaM Displa', sans-serif; /* Default font */
 }
 
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 * {
-    font-family: var(--default-font-family);
+    font-family: var(--default-font-family) !important;
 }

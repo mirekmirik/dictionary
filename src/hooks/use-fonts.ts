@@ -5,7 +5,7 @@ import { loadFonts } from '../store/header/fonts/fonts-thunks'
 import { Font } from '../types'
 import { setFont } from '../store/header/fonts/fonts-slice'
 
-export const useFonts = (): [Font[], Font, (value: string) => void] => {
+export const useFonts = (): [Font[], Font | null, (value: string) => void] => {
     const dispatch = useAppDispatch()
     const fonts = useAppSelector(selectFonts)
     const currentFont = useAppSelector(selectFont)
@@ -13,7 +13,6 @@ export const useFonts = (): [Font[], Font, (value: string) => void] => {
     const getFonts = () => {
         dispatch(loadFonts())
     }
-
 
     useEffect(() => {
         getFonts()

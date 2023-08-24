@@ -1,33 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { Status } from '../../../types/status'
 import { loadFonts } from './fonts-thunks'
-import { Font } from '../../../types'
+import { ErrorT, Font, Status } from '../../../types'
 
-interface fontsState {
+
+interface FontsState {
     status: Status,
     fonts: Font[],
-    currentFont: Font,
-    error: string | null,
+    currentFont: Font | null,
+    error: ErrorT | null,
 }
 
 
-const initialState: fontsState = {
+const initialState: FontsState = {
     status: 'idle',
     error: null,
     fonts: [],
-    currentFont: {
-        family: ''
-    },
+    currentFont: null
 }
 
-export const fontsSlice = createSlice({
+const fontsSlice = createSlice({
     name: '@@fonts',
     initialState,
     reducers: {
         setFont: (state, action: PayloadAction<Font>) => {
-            console.log('ss')
-            state.currentFont = action.payload
+            state.currentFont = action.payload;
         },
     },
     extraReducers: (builder) => {

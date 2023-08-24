@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Font } from '../../../types'
-import { API_FONTS } from '../../../config'
+import { API_DICTIONARY, API_FONTS } from '../../../config'
 
 export const loadFonts = createAsyncThunk<Font[], undefined, { rejectValue: string }>('@@fonts/load-fonts', async (_, { rejectWithValue }) => {
     try {
