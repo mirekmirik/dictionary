@@ -10,13 +10,10 @@ export const useFonts = (): [Font[], Font | null, (value: string) => void] => {
     const fonts = useAppSelector(selectFonts)
     const currentFont = useAppSelector(selectFont)
 
-    const getFonts = () => {
-        dispatch(loadFonts())
-    }
 
     useEffect(() => {
-        getFonts()
-    }, [])
+        dispatch(loadFonts())
+    }, [dispatch])
 
 
     const setCurrFont = (value: string) => {
