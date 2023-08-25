@@ -4,7 +4,7 @@ import { loadWord } from '../store/dictionary/dictionary-thunks'
 import { selectError, selectStatus, selectWord } from '../store/dictionary/dictionary-selectors'
 import { ErrorT, Status, Word } from '../types'
 
-export const useDictionary = (): { inputRef: React.RefObject<HTMLInputElement>, handleWord: (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => void, word: Word | null, error: ErrorT | null, status: Status } => {
+export const useDictionary = (): { inputRef: React.RefObject<HTMLInputElement>, handleWord: (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => void, word: Word | null, error: ErrorT | null, status: Status, acceptWord: (val: string) => void } => {
     const dispatch = useAppDispatch()
     const word = useAppSelector(selectWord)
     const error = useAppSelector(selectError)
@@ -20,7 +20,13 @@ export const useDictionary = (): { inputRef: React.RefObject<HTMLInputElement>, 
         }
     }
 
+    const acceptWord = (word: string) => {
+        if(word) {
+            dispatch(loadWord(word))
+        }
+    }
 
-    return { inputRef, handleWord, word, error, status }
+
+    return { inputRef, handleWord, word, error, status, acceptWord }
 }
 

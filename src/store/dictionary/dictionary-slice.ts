@@ -19,6 +19,7 @@ const dictionarySlice = createSlice({
     name: '@@dictionary',
     initialState,
     reducers: {
+        
     },
     extraReducers: (builder) => {
         builder

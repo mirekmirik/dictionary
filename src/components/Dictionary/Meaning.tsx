@@ -15,10 +15,20 @@ const Meaning = ({ value }: MeaningProps) => {
                 {value.map((data, idx) => {
                     return (
                         <>
-                            <ListItem key={idx} sx={{ display: 'flex', columnGap: 2,  }} >
+                            <ListItem key={idx} sx={{ display: 'flex', columnGap: 2, }} >
                                 <LensIcon color='secondary' sx={{ height: 10, width: 10 }} />
                                 <ListItemText sx={{ 'listStyleType': "disc" }} primary={data.definition}></ListItemText>
                             </ListItem>
+                            {data.example && (
+                                <>
+                                    <ListItem key={idx} sx={{ display: 'flex', columnGap: 2, }} >
+                                        <Typography sx={{opacity: 0.7}}>Example</Typography>
+                                        {/* <LensIcon color='secondary' sx={{ height: 10, width: 10 }} /> */}
+                                        <ListItemText sx={{ 'listStyleType': "disc" }} primary={data.example}></ListItemText>
+                                    </ListItem>
+
+                                </>
+                            )}
                         </>
                     )
                 })}

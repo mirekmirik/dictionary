@@ -6,7 +6,7 @@ interface SourceProps {
 
 const Source = ({ value }: SourceProps) => {
     return (
-        <Box sx={{ display: 'flex', columnGap: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', columnGap: 3, flexWrap: 'wrap', overflow: 'hidden' }}>
             <Typography sx={{ opacity: 0.7 }} fontSize={14}>Source</Typography>
             {value.map((data, idx) => {
                 return (
