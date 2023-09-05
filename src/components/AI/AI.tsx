@@ -9,7 +9,7 @@ import AIText from './AIText';
 import Spinner from '../../UI/Spinner';
 import ErrorMessage from '../../UI/ErrorMessage';
 import { TypeOfText, TypeOfWords } from '../../types';
-import { deleteUniques } from '../../config';
+import { deleteUniques, scrollToTop } from '../../config';
 
 
 export default function AI() {
@@ -73,7 +73,7 @@ export default function AI() {
     return (
         <Container>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            {status === 'loading' && <Box sx={{mb: 2}}><Spinner /></Box>}
+            {status === 'loading' && <Box sx={{ mb: 2 }}><Spinner /></Box>}
             {text && (
                 <Box>
                     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }} onClick={onDeleteText} >
@@ -146,7 +146,10 @@ export default function AI() {
                     />
                 </>
             )}
-            <Button fullWidth variant='contained' disabled={!!!words.length} color='secondary' onClick={() => onGenerateText({ words, type: switchRadio })}>
+            <Button fullWidth variant='contained' disabled={!!!words.length} color='secondary' onClick={() => {
+                scrollToTop()
+                onGenerateText({ words, type: switchRadio })
+            }}>
                 generate
             </Button>
         </Container>

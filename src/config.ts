@@ -12,3 +12,12 @@ export const DELETE_RECENTS_SERVER = 'api/dictionary/deleteRecents'
 export const deleteUniques = (arr: any[]) => {
     return arr.filter((value, idx, arr) => arr.indexOf(value) === idx)
 }
+
+
+
+export const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional: Smooth scrolling animation
+    });
+}
