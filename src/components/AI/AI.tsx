@@ -9,6 +9,7 @@ import AIText from './AIText';
 import Spinner from '../../UI/Spinner';
 import ErrorMessage from '../../UI/ErrorMessage';
 import { TypeOfText, TypeOfWords } from '../../types';
+import { deleteUniques } from '../../config';
 
 
 export default function AI() {
@@ -45,7 +46,7 @@ export default function AI() {
             onConfirmWords([])
         }
         if (switchOption === 'all') {
-            const joinedWords = [...favouriteWords, ...recentWords]
+            const joinedWords = deleteUniques([...favouriteWords, ...recentWords])
             onAddSuggestWords(joinedWords)
             setWords(joinedWords)
             onConfirmWords(joinedWords)
