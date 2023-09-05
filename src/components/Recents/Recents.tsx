@@ -13,7 +13,7 @@ const Recents = () => {
 
     return (
         <Box>
-            <Typography textAlign={'center'} color={'secondary'} mb={1}>Recently words</Typography>
+            <Typography textAlign={'center'} mb={1}>Recently words</Typography>
             {!recentWords.length ?
                 (
                     <Typography textAlign={'center'} color={'secondary'} mb={1}>Recents words haven't been added yet...</Typography>

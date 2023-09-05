@@ -86,7 +86,7 @@ export default function AI() {
             {showControllers && (
                 <>
                     <FormControl component="fieldset" variant="standard" fullWidth sx={{ display: "flex", flexDirection: "column", rowGap: '15px', mb: '20px' }}>
-                        <Typography color='secondary' textAlign={'center'} width={'100%'}>Pick words for generate AI text</Typography>
+                        <Typography textAlign={'center'} width={'100%'}>Pick words for generate AI text</Typography>
                         <RadioGroup>
                             <FormControlLabel
                                 control={
@@ -129,12 +129,13 @@ export default function AI() {
                         options={suggestWords}
                         disableCloseOnSelect={true}
                         value={words}
-                        onChange={(_, newValue) => {
+                        onChange={(event, newValue) => {
                             onConfirmWords(newValue);
                             setWords(newValue);
                         }}
                         loading={status === 'loading'}
                         clearOnEscape={true}
+                        freeSolo
                         renderTags={(value) => (
                             value.map((option, idx, arr) => (
                                 <Chip sx={{ mb: 1, mr: 1 }} key={idx} color='secondary' label={option} onDelete={() => deleteOption(arr, option)} />

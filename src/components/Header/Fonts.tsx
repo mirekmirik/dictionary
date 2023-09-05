@@ -18,6 +18,7 @@ export const Fonts: React.FC<FontsProps> = ({ fonts, optionCurrentFont, onSetCur
       <>
         <Autocomplete
           id="fonts-box"
+          color='secondary'
           disableClearable
           isOptionEqualToValue={(option, value) => option.family === value.label}
           value={optionCurrentFont}

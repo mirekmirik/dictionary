@@ -21,7 +21,8 @@ export const getAIText = createAsyncThunk<string, { words: string[], type: TypeO
     try {
         const completion = await openai.chat.completions.create({
             messages: [{ "role": "system", "content": "You are a good english-assistant" }, { role: "user", content: `Just write me a simple ${data.type} with this words: ${data.words.join(', ')}` }],
-            model: "gpt-3.5-turbo"
+            model: "gpt-3.5-turbo",
+            // temperature: 1
         })
         if (!completion) {
             throw new Error(`Something went wrong untill getting a response...`)

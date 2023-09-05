@@ -6,7 +6,8 @@ import { useDictionary } from '../../hooks/use-dictionary';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const Search = () => {
-    const { inputRef, handleWord } = useDictionary()
+    const { inputRef, handleWord, word } = useDictionary()
+
 
 
     const clearWord = () => {
@@ -23,16 +24,16 @@ const Search = () => {
         >
             <InputBase
                 sx={{ ml: 1, flex: 1, height: 50 }}
-                autoFocus
+                autoFocus={!!!word}
                 inputRef={inputRef}
                 placeholder="Search word"
                 inputProps={{ 'aria-label': 'search google maps' }}
             />
             <IconButton type="button" sx={{ p: '10px' }} aria-label="clear" onClick={clearWord}>
-                <ClearIcon />
+                <ClearIcon color='secondary' />
             </IconButton>
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleWord}>
-                <SearchIcon />
+                <SearchIcon color='secondary' />
             </IconButton>
         </Paper>
     )

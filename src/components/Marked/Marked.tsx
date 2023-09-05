@@ -13,7 +13,7 @@ const Marked = () => {
 
   return (
     <Box>
-      <Typography textAlign={'center'} color={'secondary'} mb={1}>Marked words</Typography>
+      <Typography textAlign={'center'} mb={1}>Marked words</Typography>
 
       {error ? <ErrorMessage>{error}</ErrorMessage> : !favouriteWords.length ?
         (

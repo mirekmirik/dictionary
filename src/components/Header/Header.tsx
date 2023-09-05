@@ -38,7 +38,7 @@ const Header = () => {
             <Grid item container alignItems={'center'} justifyContent={'space-between'}>
                 <Grid item container justifyContent={'space-between'} columnGap={1} width={'auto'} xs={12} md={12} mb={'10px'} marginBottom={'10px'}>
                     <Grid item xs={9} md={9}>
-                        <AutoStoriesOutlinedIcon sx={{ height: 40, width: 40, opacity: 0.7 }} />
+                        <AutoStoriesOutlinedIcon color='secondary' sx={{ height: 40, width: 40 }} />
                     </Grid>
                     <Grid item display={'flex'} alignItems={'center'} justifyContent={'flex-end'} xs={2} md={2}>
                         {user ?

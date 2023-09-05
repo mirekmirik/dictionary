@@ -42,7 +42,6 @@ export const useAI = (): useAIHookResult => {
     }
 
     const onGenerateText = (data: { words: string[], type: TypeOfText }) => {
-        console.log(data)
         dispatch(getAIText(data))
     }
 
