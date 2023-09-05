@@ -73,7 +73,7 @@ export default function AI() {
     return (
         <Container>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            {status === 'loading' && <Spinner />}
+            {status === 'loading' && <Box sx={{mb: 2}}><Spinner /></Box>}
             {text && (
                 <Box>
                     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }} onClick={onDeleteText} >

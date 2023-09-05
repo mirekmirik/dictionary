@@ -9,7 +9,7 @@ const Recents = () => {
 
     useEffect(() => {
         getRecentlyWords()
-    })
+    }, [])
 
     return (
         <Box>

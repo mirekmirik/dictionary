@@ -9,7 +9,7 @@ const Marked = () => {
 
   useEffect(() => {
     getFavouritesWords()
-  })
+  }, [])
 
   return (
     <Box>
