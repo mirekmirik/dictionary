@@ -4,7 +4,7 @@ interface PartOfSpeechProps {
     value: string
 }
 
-const PartOfSpeech = ({ value }: PartOfSpeechProps) => {
+const PartOfSpeech: React.FC<PartOfSpeechProps> = ({ value }) => {
     return (
         <Typography fontWeight={600} fontStyle={'italic'}>{value}</Typography>
     )

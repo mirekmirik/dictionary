@@ -10,10 +10,10 @@ interface PlayProps {
     word: Word
 }
 
-const Play = ({ word }: PlayProps) => {
+const Play:React.FC<PlayProps> = ({ word }) => {
 
     const getLink = useCallback(() => {
-        const link = word.phonetics.length ? word.phonetics.filter((data) => data.audio) : undefined
+        const link = word.phonetics.length ? word.phonetics.filter((data) => data.audio) : null
         if (link && link.length) {
             const phoneticLink = link[0];
             return phoneticLink.audio

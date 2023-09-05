@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 
 
+type PlayHookResult = [boolean, () => void]
 
 
-const usePlay = (link: string | undefined): [boolean, () => void] => {
+const usePlay = (link: string | undefined): PlayHookResult => {
 
     const [audioInstance, setAudioInstance] = useState<HTMLAudioElement>();
     const [isPlaying, setIsPlaying] = useState(false);

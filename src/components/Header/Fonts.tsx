@@ -11,19 +11,18 @@ interface FontsProps {
   onSetCurrentFont: (value: string) => void
 }
 
-export const Fonts = ({ fonts, optionCurrentFont, onSetCurrentFont, error }: FontsProps) => {
+export const Fonts: React.FC<FontsProps> = ({ fonts, optionCurrentFont, onSetCurrentFont, error }) => {
 
   return (
     !error && optionCurrentFont ? (
       <>
         <Autocomplete
-          blurOnSelect
           id="fonts-box"
           disableClearable
           isOptionEqualToValue={(option, value) => option.family === value.label}
           value={optionCurrentFont}
           options={fonts}
-          sx={{ width: 200 }}
+          sx={{ width: '100%' }}
           onChange={(_, newValue) => onSetCurrentFont(newValue.family)}
           renderInput={(params) => <TextField  {...params} label="Font" />}
         />

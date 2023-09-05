@@ -6,9 +6,9 @@ interface ContainerProps {
     children: ReactNode
 }
 
-const Wrapper = ({ children }: ContainerProps) => {
+const Wrapper:React.FC<ContainerProps> = ({ children }) => {
     return (
-        <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Container maxWidth={'md'} sx={{ display: 'flex', flexDirection: 'column', paddingBottom: '75px' }}>
             {children}
         </Container >
     )

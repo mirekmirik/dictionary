@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { loadFonts } from './fonts-thunks'
-import { ErrorT, Font, Status } from '../../../types'
+import { ErrorT, Font, Status } from '../../types'
 
 
 interface FontsState {

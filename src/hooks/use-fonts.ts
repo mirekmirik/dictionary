@@ -1,19 +1,21 @@
-import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/store'
-import { selectError, selectFont, selectFonts } from '../store/header/fonts/fonts-selectors'
-import { loadFonts } from '../store/header/fonts/fonts-thunks'
+import { selectFontError, selectFont, selectFonts } from '../store/fonts/fonts-selectors'
+import { loadFonts } from '../store/fonts/fonts-thunks'
 import { ErrorT, Font } from '../types'
-import { setFont } from '../store/header/fonts/fonts-slice'
+import { setFont } from '../store/fonts/fonts-slice'
 
-export const useFonts = (): [Font[], Font | null, (value: string) => void, ErrorT | null] => {
+
+type FontsHookResult = [Font[], Font | null, (value: string) => void, ErrorT | null, () => void]
+
+export const useFonts = (): FontsHookResult => {
     const dispatch = useAppDispatch()
     const fonts = useAppSelector(selectFonts)
     const currentFont = useAppSelector(selectFont)
-    const error = useAppSelector(selectError)
+    const error = useAppSelector(selectFontError)
 
-    useEffect(() => {
+    const onLoadFonts = () => {
         dispatch(loadFonts())
-    }, [dispatch])
+    }
 
 
     const setCurrFont = (value: string) => {
@@ -24,6 +26,6 @@ export const useFonts = (): [Font[], Font | null, (value: string) => void, Error
         }
     }
 
-    return [fonts, currentFont, setCurrFont, error]
+    return [fonts, currentFont, setCurrFont, error, onLoadFonts]
 }
 

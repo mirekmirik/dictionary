@@ -6,13 +6,13 @@ interface AntonymysProps {
   value: string[]
 }
 
-const Antonymys = ({ value }: AntonymysProps) => {
+const Antonymys:React.FC<AntonymysProps> = ({ value }) => {
 
   const { acceptWord } = useDictionary()
 
 
   return (
-    <Box sx={{ display: 'flex', columnGap: 3, flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', columnGap: 3, flexWrap: 'wrap' }} mb={3}>
       <Typography sx={{ opacity: 0.7 }}>Antonymys</Typography>
       {value.map((data, idx) => {
         return (

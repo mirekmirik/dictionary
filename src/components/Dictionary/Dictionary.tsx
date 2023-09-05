@@ -1,25 +1,27 @@
 import { useDictionary } from '../../hooks/use-dictionary'
-import { Box, Container, Grid, Divider, Typography, CircularProgress } from '@mui/material'
+import { Box, Container, Grid, Divider, Typography } from '@mui/material'
 import Word from './Word'
 import Play from './Play'
 import Transcription from './Transcription'
-import PartOfSpeech from './PartOfSpeech'
 import Meaning from './Meaning'
 import Synonyms from './Synonyms'
 import Source from './Source'
 import Antonymys from './Antonymys'
+import Spinner from '../../UI/Spinner'
+import Favourite from './Favourite'
 
 
 const Dictionary = () => {
 
-    const { word, error, status } = useDictionary()
+    const { word, error, status, toggleFavouriteWord, favouriteWords } = useDictionary()
+
 
 
 
     return (
         status !== 'loading' && status !== 'rejected' && word ? (
             <Container>
-                <Grid container direction={'row'} justifyContent={'space-between'} alignItems={'flex-start'}>
+                <Grid container direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
                     <Grid>
                         <Word value={word.word} />
                     </Grid>
@@ -27,43 +29,36 @@ const Dictionary = () => {
                         <Play word={word} />
                     </Grid>
                 </Grid>
+                <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end' }}>
+                    <Favourite onToggleWord={toggleFavouriteWord} word={word.word} favouriteWords={favouriteWords} />
+                </Box>
                 <Box sx={{ mb: 4 }}>
                     <Transcription value={word.phonetic} />
                 </Box>
-
                 {word.meanings.map((data, idx) => {
-                    return (
-                        <>
-                            <Box key={idx} sx={{ display: 'flex', alignItems: 'center', mb: 3, overflow: 'hidden' }} columnGap={3}>
-                                <PartOfSpeech value={data.partOfSpeech} />
-                                <Divider textAlign='left' sx={{ width: '100%', height: '1px' }} />
-                            </Box>
-                            {data.definitions.length > 0 && (
-                                <Box sx={{ mb: 3 }} >
+                        return (
+                            <Box key={idx} sx={{ margin: 0 }}>
+                                {data.definitions.length > 0 && (
                                     <Meaning value={data.definitions} />
-                                </Box>
-                            )}
-                            {data.synonyms.length > 0 && (
-                                <Box sx={{ mb: 3 }} >
+                                )}
+                                {data.synonyms.length > 0 && (
                                     <Synonyms value={data.synonyms} />
-                                </Box>
-                            )}
-                            {data.antonyms.length > 0 && (
-                                <Box sx={{ mb: 3 }} >
+                                )}
+                                {data.antonyms.length > 0 && (
                                     <Antonymys value={data.antonyms} />
-                                </Box>
-                            )}
-                        </>
-
-                    )
-                })}
-                < Divider sx={{ mb: 3 }} />
+                                )}
+                            </Box>
+                        )
+                    })}
+                <Divider sx={{ mb: 3 }} />
                 <Box>
                     <Source value={word.sourceUrls} />
                 </Box>
-            </Container>) :
+
+            </Container>)
+            :
             <Box sx={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                {status === 'loading' ? <CircularProgress color="secondary" /> : <Typography color={'error'}>{error}</Typography>}
+                {status === 'loading' ? <Spinner /> : <Typography color={'error'}>{error}</Typography>}
             </Box>
 
     )

@@ -4,7 +4,7 @@ interface SourceProps {
     value: string[]
 }
 
-const Source = ({ value }: SourceProps) => {
+const Source:React.FC<SourceProps> = ({ value }) => {
     return (
         <Box sx={{ display: 'flex', columnGap: 3, flexWrap: 'wrap', overflow: 'hidden' }}>
             <Typography sx={{ opacity: 0.7 }} fontSize={14}>Source</Typography>

@@ -19,7 +19,7 @@ const Search = () => {
         <Paper
             component="form"
             onSubmit={handleWord}
-            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '95%', alignSelf: 'center', mb: 5 }}
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '95%', alignSelf: 'center', mb: 3 }}
         >
             <InputBase
                 sx={{ ml: 1, flex: 1, height: 50 }}

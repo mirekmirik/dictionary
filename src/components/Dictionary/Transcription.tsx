@@ -4,7 +4,7 @@ interface TranscriptionProps {
     value: string
 }
 
-const Transcription = ({ value }: TranscriptionProps) => {
+const Transcription:React.FC<TranscriptionProps> = ({ value }) => {
     return (
         <Typography color={'secondary'} fontSize={24}>{value}</Typography>
     )
