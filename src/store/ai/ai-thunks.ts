@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import OpenAI from 'openai'
-import { TypeOfText } from "../../types";
+import { EnglishLvl, TypeOfText } from "../../types";
 const Configuration = require('openai')
 
 
@@ -17,12 +17,11 @@ const openai = new OpenAI({ ...configuration, dangerouslyAllowBrowser: true })
 
 
 
-export const getAIText = createAsyncThunk<string, { words: string[], type: TypeOfText }, { rejectValue: string }>('@@ai/get-ai-text', async (data, { rejectWithValue }) => {
+export const getAIText = createAsyncThunk<string, { words: string[], type: TypeOfText, englishLvl: EnglishLvl }, { rejectValue: string }>('@@ai/get-ai-text', async (data, { rejectWithValue }) => {
     try {
         const completion = await openai.chat.completions.create({
-            messages: [{ "role": "system", "content": "You are a good english-assistant" }, { role: "user", content: `Just write me a simple ${data.type} with this words: ${data.words.join(', ')}` }],
+            messages: [{ "role": "system", "content": "You are a good english-assistant" }, { role: "user", content: `Just write me a simple ${data.type}, if my english lvl is ${data.englishLvl}, with ${data.words.length <= 1 ? 'this word' : 'these words'}: ${data.words.join(', ')}` }],
             model: "gpt-3.5-turbo",
-            // temperature: 1
         })
         if (!completion) {
             throw new Error(`Something went wrong untill getting a response...`)

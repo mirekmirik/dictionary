@@ -7,3 +7,4 @@ export const selectAIStatus = (state: RootState) => state.ai.status
 export const selectAIText = (state: RootState) => state.ai.text
 export const selectAITypeOfText = (state: RootState) => state.ai.typeOfWhichText
 export const selectAiTypeOfWords = (state: RootState) => state.ai.typeOfWhichWords
+export const selectAiEnglishLvl = (state: RootState) => state.ai.englishLvl

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../store/store'
-import { selectAIConfirmWords, selectAIError, selectAIStatus, selectAISuggestWords, selectAIText, selectAITypeOfText, selectAiTypeOfWords } from '../store/ai/ai-selectors'
-import { ErrorT, Status, TypeOfText, TypeOfWords } from '../types'
-import { addConfirmWords, addSuggestWords, deleteText, setTypeOfWhichText, setTypeOfWhichWords } from '../store/ai/ai-slice'
+import { selectAIConfirmWords, selectAIError, selectAIStatus, selectAISuggestWords, selectAIText, selectAITypeOfText, selectAiEnglishLvl, selectAiTypeOfWords } from '../store/ai/ai-selectors'
+import { EnglishLvl, ErrorT, Status, TypeOfText, TypeOfWords } from '../types'
+import { addConfirmWords, addSuggestWords, deleteText, setEnglishLvl, setTypeOfWhichText, setTypeOfWhichWords } from '../store/ai/ai-slice'
 import { deleteUniques } from '../config'
 import { getAIText } from '../store/ai/ai-thunks'
 
@@ -13,15 +13,19 @@ interface useAIHookResult {
     text: string | null,
     typeOfText: TypeOfText,
     typeOfWords: TypeOfWords,
+    englishLvl: EnglishLvl,
     onAddSuggestWords: (data: string[]) => void,
     onConfirmWords: (data: string[]) => void,
-    onGenerateText: (data: { words: string[], type: TypeOfText }) => void,
+    onGenerateText: (data: { words: string[], type: TypeOfText, englishLvl: EnglishLvl }) => void,
     onDeleteText: () => void,
     setTypeText: (type: TypeOfText) => void,
     setTypeWords: (type: TypeOfWords) => void,
+    onSelectEnglishLvl: (lvl: EnglishLvl) => void
 }
 
 export const useAI = (): useAIHookResult => {
+
+
     const dispatch = useAppDispatch()
     const suggestWords = useAppSelector(selectAISuggestWords)
     const confirmWords = useAppSelector(selectAIConfirmWords)
@@ -30,6 +34,7 @@ export const useAI = (): useAIHookResult => {
     const status = useAppSelector(selectAIStatus)
     const typeOfText = useAppSelector(selectAITypeOfText)
     const typeOfWords = useAppSelector(selectAiTypeOfWords)
+    const englishLvl = useAppSelector(selectAiEnglishLvl)
 
     const onAddSuggestWords = (data: string[]) => {
         const deleteUniquesWords = deleteUniques(data)
@@ -41,12 +46,16 @@ export const useAI = (): useAIHookResult => {
         dispatch(addConfirmWords(deleteUniquesWords))
     }
 
-    const onGenerateText = (data: { words: string[], type: TypeOfText }) => {
+    const onGenerateText = (data: { words: string[], type: TypeOfText, englishLvl: EnglishLvl }) => {
         dispatch(getAIText(data))
     }
 
     const onDeleteText = () => {
         dispatch(deleteText())
+    }
+
+    const onSelectEnglishLvl = (lvl: EnglishLvl) => {
+        dispatch(setEnglishLvl(lvl))
     }
 
     const setTypeText = (type: TypeOfText) => {
@@ -58,7 +67,7 @@ export const useAI = (): useAIHookResult => {
     }
 
 
-    return { suggestWords, confirmWords, error, status, text, typeOfText, typeOfWords, onAddSuggestWords, onConfirmWords, onGenerateText, onDeleteText, setTypeWords, setTypeText }
+    return { suggestWords, confirmWords, error, status, text, typeOfText, typeOfWords, englishLvl, onAddSuggestWords, onConfirmWords, onGenerateText, onDeleteText, setTypeWords, setTypeText, onSelectEnglishLvl }
 
 }
 

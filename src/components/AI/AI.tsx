@@ -1,67 +1,65 @@
 import { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Container, FormControl, FormControlLabel, Switch, RadioGroup, Typography, Chip, Button, Box, FormLabel, Radio } from '@mui/material'
+import { Container, FormControl, FormControlLabel, Switch, RadioGroup, Typography, Chip, Button, Box, FormLabel, Radio, InputLabel, Select, MenuItem } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import { useAI } from '../../hooks/use-ai';
 import { useDictionary } from '../../hooks/use-dictionary';
 import AIText from './AIText';
 import Spinner from '../../UI/Spinner';
 import ErrorMessage from '../../UI/ErrorMessage';
-import { TypeOfText, TypeOfWords } from '../../types';
+import { EnglishLvl, TypeOfText, TypeOfWords } from '../../types';
 import { deleteUniques, scrollToTop } from '../../config';
 
 
 export default function AI() {
 
     const { favouriteWords, recentWords } = useDictionary()
-    const { suggestWords, error, status, text, typeOfText, typeOfWords, setTypeText, setTypeWords, onAddSuggestWords, onConfirmWords, onGenerateText, onDeleteText } = useAI()
+    const allWords = [...favouriteWords, ...recentWords]
+    const { suggestWords, error, status, text, typeOfText, confirmWords, englishLvl, typeOfWords, setTypeText, setTypeWords, onAddSuggestWords, onConfirmWords, onGenerateText, onDeleteText, onSelectEnglishLvl } = useAI()
 
-    const [words, setWords] = useState(suggestWords)
     const [showControllers, setShowControllers] = useState(!!text)
 
-    const [switchOption, setSwitchOption] = useState<TypeOfWords | ''>(typeOfWords);
-    const [switchRadio, setSwitchRadio] = useState<TypeOfText>(typeOfText)
 
     const handleChangeOption = (event: React.ChangeEvent<HTMLInputElement>) => {
-        switchOption === event.target.value ? setSwitchOption('') : setSwitchOption((event.target as HTMLInputElement).value as TypeOfWords)
+        if (typeOfWords === event.target.value) {
+            setTypeWords('')
+            return;
+        } 
         setTypeWords(event.target.value as TypeOfWords)
     }
+    console.log(typeOfWords)
 
     const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSwitchRadio((event.target as HTMLInputElement).value as TypeOfText)
         setTypeText(event.target.value as TypeOfText)
     }
     const deleteOption = (words: string[], word: string) => {
         const newWords = words.filter((w) => w !== word)
-        setWords(newWords)
+        onAddSuggestWords(newWords)
         onConfirmWords(newWords)
     }
 
 
     useEffect(() => {
-        if (!switchOption) {
+        if (!typeOfWords) {
             onAddSuggestWords([])
-            setWords([])
             onConfirmWords([])
         }
-        if (switchOption === 'all') {
+        if (typeOfWords === 'all') {
             const joinedWords = deleteUniques([...favouriteWords, ...recentWords])
             onAddSuggestWords(joinedWords)
-            setWords(joinedWords)
             onConfirmWords(joinedWords)
         }
-        if (switchOption === 'favourite') {
+        if (typeOfWords === 'favourite') {
             onAddSuggestWords(favouriteWords)
-            setWords(favouriteWords)
             onConfirmWords(favouriteWords)
         }
-        if (switchOption === 'recently') {
+        if (typeOfWords === 'recently') {
             onAddSuggestWords(recentWords)
-            setWords(recentWords)
             onConfirmWords(recentWords)
         }
-    }, [switchOption])
+    }, [typeOfWords])
+
 
 
     useEffect(() => {
@@ -79,7 +77,7 @@ export default function AI() {
                     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }} onClick={onDeleteText} >
                         <CloseIcon color='secondary' />
                     </Box>
-                    <AIText confirmWords={words} text={text} />
+                    <AIText confirmWords={confirmWords} text={text} />
                     <Button fullWidth variant='contained' color='secondary' sx={{ mb: 2 }} onClick={() => setShowControllers((prevState) => !prevState)}>{showControllers ? 'Hide controllers' : 'Show controllers'}</Button>
                 </Box>
             )}
@@ -90,19 +88,19 @@ export default function AI() {
                         <RadioGroup>
                             <FormControlLabel
                                 control={
-                                    <Switch checked={switchOption === 'favourite'} value={'favourite'} color='secondary' onChange={handleChangeOption} name="favourite" />
+                                    <Switch checked={typeOfWords === 'favourite'} value={'favourite'} color='secondary' onChange={handleChangeOption} name="favourite" />
                                 }
                                 label="Favourite"
                             />
                             <FormControlLabel
                                 control={
-                                    <Switch checked={switchOption === 'recently'} value={'recently'} color='secondary' onChange={handleChangeOption} name="recently" />
+                                    <Switch checked={typeOfWords === 'recently'} value={'recently'} color='secondary' onChange={handleChangeOption} name="recently" />
                                 }
                                 label="Recently"
                             />
                             <FormControlLabel
                                 control={
-                                    <Switch checked={switchOption === 'all'} value={'all'} color='secondary' onChange={handleChangeOption} name="all" />
+                                    <Switch checked={typeOfWords === 'all'} value={'all'} color='secondary' onChange={handleChangeOption} name="all" />
                                 }
                                 label="All"
                             />
@@ -112,7 +110,7 @@ export default function AI() {
                         <RadioGroup
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
-                            value={switchRadio}
+                            value={typeOfText}
                             onChange={handleChangeRadio}
                         >
                             <FormControlLabel color='secondary' value="dialogue" control={<Radio color='secondary' />} label="Dialogue" />
@@ -122,16 +120,36 @@ export default function AI() {
 
                     </FormControl>
 
+                    <FormControl fullWidth sx={{ mb: 3 }}>
+                        <InputLabel id="demo-simple-select-label">English Level</InputLabel>
+                        <Select
+                            color='secondary'
+                            labelId="englishLvl"
+                            id="englishLvl"
+                            value={englishLvl}
+                            label="English level"
+                            defaultValue={englishLvl}
+                            onChange={(event) => onSelectEnglishLvl(event.target.value as EnglishLvl)}
+                        >
+                            <MenuItem value={'A1'}>A1</MenuItem>
+                            <MenuItem value={'A2'}>A2</MenuItem>
+                            <MenuItem value={'B1'}>B1</MenuItem>
+                            <MenuItem value={'B2'}>B2</MenuItem>
+                            <MenuItem value={'C1'}>C1</MenuItem>
+                            <MenuItem value={'C2'}>C2</MenuItem>
+                        </Select>
+                    </FormControl>
+
                     <Autocomplete
                         sx={{ mb: 2 }}
                         multiple
                         id="multiple-limit-tags"
-                        options={suggestWords}
+                        options={typeOfWords === '' ? allWords : suggestWords}
                         disableCloseOnSelect={true}
-                        value={words}
-                        onChange={(event, newValue) => {
+                        value={suggestWords}
+                        onChange={(_, newValue) => {
                             onConfirmWords(newValue);
-                            setWords(newValue);
+                            onAddSuggestWords(newValue)
                         }}
                         loading={status === 'loading'}
                         clearOnEscape={true}
@@ -145,11 +163,13 @@ export default function AI() {
                             <TextField {...params} color='secondary' label="Words" placeholder="Pick" />
                         )}
                     />
+
+
                 </>
             )}
-            <Button fullWidth variant='contained' disabled={!!!words.length} color='secondary' onClick={() => {
+            <Button fullWidth variant='contained' disabled={!!!confirmWords.length} color='secondary' onClick={() => {
                 scrollToTop()
-                onGenerateText({ words, type: switchRadio })
+                onGenerateText({ words: confirmWords, type: typeOfText, englishLvl: englishLvl })
             }}>
                 generate
             </Button>
