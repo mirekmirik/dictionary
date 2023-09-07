@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getAIText } from "./ai-thunks";
-import { EnglishLvl, ErrorT, Status, TypeOfText, TypeOfWords } from "../../types";
+import { EnglishLvl, ErrorT, IsRussian, Status, TypeOfText, TypeOfWords } from "../../types";
 import { deleteUniques } from "../../config";
 
 interface AIState {
@@ -9,6 +9,7 @@ interface AIState {
     typeOfWhichWords: TypeOfWords,
     typeOfWhichText: TypeOfText,
     englishLvl: EnglishLvl,
+    isRussian: IsRussian,
     status: Status,
     error: ErrorT | null
     text: string | null
@@ -20,6 +21,7 @@ const initialState: AIState = {
     typeOfWhichWords: 'recently',
     typeOfWhichText: 'dialogue',
     englishLvl: 'B1',
+    isRussian: false,
     status: 'idle',
     error: null,
     text: null
@@ -43,6 +45,9 @@ const AISlice = createSlice({
         },
         setEnglishLvl: (state, action: PayloadAction<EnglishLvl>) => {
             state.englishLvl = action.payload
+        },
+        setRussian: (state, action: PayloadAction<IsRussian>) => {
+            state.isRussian = action.payload
         },
         deleteText: (state) => {
             state.text = null;
@@ -68,6 +73,6 @@ const AISlice = createSlice({
     }
 })
 
-export const { addSuggestWords, addConfirmWords, deleteText, setTypeOfWhichWords, setTypeOfWhichText, setEnglishLvl } = AISlice.actions
+export const { addSuggestWords, addConfirmWords, deleteText, setTypeOfWhichWords, setTypeOfWhichText, setEnglishLvl, setRussian } = AISlice.actions
 
 export default AISlice.reducer

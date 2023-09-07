@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Container, FormControl, FormControlLabel, Switch, RadioGroup, Typography, Chip, Button, Box, FormLabel, Radio, InputLabel, Select, MenuItem } from '@mui/material'
+import { Container, FormControl, FormControlLabel, Switch, RadioGroup, Typography, Chip, Button, Box, FormLabel, Radio, InputLabel, Select, MenuItem, FormGroup, Checkbox } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import { useAI } from '../../hooks/use-ai';
 import { useDictionary } from '../../hooks/use-dictionary';
 import AIText from './AIText';
 import Spinner from '../../UI/Spinner';
 import ErrorMessage from '../../UI/ErrorMessage';
-import { EnglishLvl, TypeOfText, TypeOfWords } from '../../types';
+import { EnglishLvl, IsRussian, TypeOfText, TypeOfWords } from '../../types';
 import { deleteUniques, scrollToTop } from '../../config';
 
 
@@ -16,7 +16,7 @@ export default function AI() {
 
     const { favouriteWords, recentWords } = useDictionary()
     const allWords = [...favouriteWords, ...recentWords]
-    const { suggestWords, error, status, text, typeOfText, confirmWords, englishLvl, typeOfWords, setTypeText, setTypeWords, onAddSuggestWords, onConfirmWords, onGenerateText, onDeleteText, onSelectEnglishLvl } = useAI()
+    const { suggestWords, error, status, text, typeOfText, confirmWords, englishLvl, typeOfWords, isRussian, setTypeText, setTypeWords, onSetRussian, onAddSuggestWords, onConfirmWords, onGenerateText, onDeleteText, onSelectEnglishLvl } = useAI()
 
     const [showControllers, setShowControllers] = useState(!!text)
 
@@ -83,7 +83,7 @@ export default function AI() {
             )}
             {showControllers && (
                 <>
-                    <FormControl component="fieldset" variant="standard" fullWidth sx={{ display: "flex", flexDirection: "column", rowGap: '15px', mb: '20px' }}>
+                    <FormControl component="fieldset" variant="standard" fullWidth sx={{ display: "flex", flexDirection: "column", rowGap: 1, mb: 2 }}>
                         <Typography textAlign={'center'} width={'100%'}>Pick words for generate AI text</Typography>
                         <RadioGroup>
                             <FormControlLabel
@@ -118,7 +118,16 @@ export default function AI() {
                             <FormControlLabel color='secondary' value="story" control={<Radio color='secondary' />} label="Story" />
                         </RadioGroup>
 
+                        <RadioGroup>
+                            <FormControlLabel
+                                control={
+                                    <Switch checked={isRussian} value={isRussian ?? ""} color='secondary' onChange={(event) => onSetRussian(!isRussian)} name="isRussian" />
+                                }
+                                label="Russian"
+                            />
+                        </RadioGroup>
                     </FormControl>
+
 
                     <FormControl fullWidth sx={{ mb: 3 }}>
                         <InputLabel id="demo-simple-select-label">English Level</InputLabel>
@@ -169,7 +178,7 @@ export default function AI() {
             )}
             <Button fullWidth variant='contained' disabled={!!!confirmWords.length} color='secondary' onClick={() => {
                 scrollToTop()
-                onGenerateText({ words: confirmWords, type: typeOfText, englishLvl: englishLvl })
+                onGenerateText({ words: confirmWords, type: typeOfText, englishLvl: englishLvl, isRussian })
             }}>
                 generate
             </Button>
