@@ -25,10 +25,9 @@ export default function AI() {
         if (typeOfWords === event.target.value) {
             setTypeWords('')
             return;
-        } 
+        }
         setTypeWords(event.target.value as TypeOfWords)
     }
-    console.log(typeOfWords)
 
     const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTypeText(event.target.value as TypeOfText)
@@ -41,7 +40,8 @@ export default function AI() {
 
 
     useEffect(() => {
-        if (!typeOfWords) {
+        if (typeOfWords === '') {
+            if (text) return;
             onAddSuggestWords([])
             onConfirmWords([])
         }
